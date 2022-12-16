@@ -1,0 +1,10 @@
+# Refactor images.transform
+# Add Tests !
+    ¿ mypy, pyflakes, py.test, hypothesis ?
+    ¿ how to test threading ?
+# Add a config file ?
+# Add docstrings
+# Add logging
+# Add SentinelType and Sentinel rather than None...
+# Add README content
+# Add comments about GIL (better to use processes than threads) ?

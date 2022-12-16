@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "unitem-task"
+version = "0.1.0"
+description = ""
+authors = ["Tomasz Sobieszek <tom.sobieszek@gmail.com>"]
+readme = "README.md"
+packages = [{include = "unitem_task"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.6.2"
+numpy = "^1.23.5"
+scipy = "^1.9.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
