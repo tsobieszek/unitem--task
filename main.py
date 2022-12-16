@@ -17,7 +17,7 @@ def main():
     save_dir = Path('processed')
     save_dir.mkdir(parents=True, exist_ok=True)
 
-    transform = images.transform
+    transform = images.make_transform(zoom_factor=0.5, kernel_size=(5, 5))
 
     ingesting = Thread(target=queues.ingest, args=(source, queue_a), kwargs={'limit': 100, 'interval_ms': 50})
     transforming = Thread(target=queues.process, args=(queue_a, transform, queue_b))
