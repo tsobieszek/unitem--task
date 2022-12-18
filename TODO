@@ -1,8 +1,8 @@
 # Add exception handling
-# Add remaining docstrings
 # Test main()
 # Add more test samples OR (better)
 # Add hypothesis properties-based tests
-# Add logging
+# Add remaining docstrings
 # Add a config file and put there all the constants from main()
+# Add more logging, make it configurable
 # Add comments about GIL (better to use processes than threads) ?

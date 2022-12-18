@@ -1,3 +1,4 @@
+import logging
 from itertools import islice, count
 from pathlib import Path
 from queue import Queue
@@ -32,6 +33,7 @@ def ingest(source: DataSource[T], target: TaskQueue[T], *,
     counter = islice(count(start=1), limit)
 
     for task_id in counter:
+        logging.info(f'Ingesting task {task_id} from source')
         item = RealTask(task_id, 'input', source.get_data())
         target.put(item)
         sleep(interval_ms / 1000)
@@ -57,6 +59,7 @@ def process(source: TaskQueue[T], transform: Transform[T], target: TaskQueue[T])
     while task := source.get():
         match task:
             case RealTask(task_id, _, content):
+                logging.info(f'processing task {task_id}')
                 target.put(RealTask(task_id, 'output', transform(content)))
                 source.task_done()
 
@@ -81,5 +84,6 @@ def save(source: TaskQueue[T], directory: Path, saver: FileSaver[T]) -> None:
         match task:
             case RealTask(task_id, task_type, content):
                 file = directory / f'{task_type}_{task_id}.{saver.extension()}'
+                logging.info(f'Saving processed task {task_id} to {file}')
                 saver.save(file, content)
                 source.task_done()

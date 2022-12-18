@@ -8,12 +8,14 @@ import queues
 from images import Image, PngImageSaver
 from queues import TaskQueue
 from source import Source, DataSource
+import logging
 
 ImageDataSource = DataSource[Image]
 ImageTaskQueue = TaskQueue[Image]
 
-
 def main() -> None:
+    logging.basicConfig(level=logging.INFO)
+
     source = Source(ImageShape(width=1024, height=768, channels=3))  # type: ImageDataSource
 
     queue_a = Queue(maxsize=16)  # type: ImageTaskQueue
