@@ -1,9 +1,8 @@
-# Add Tests !
-    ¿ py.test, hypothesis ?
-    ¿ how to test threading ?
-# Add a config file ?
 # Add docstrings
+# Add exception handling
+# Test main()
+# Add more test samples OR (better)
+# Add hypothesis properties-based tests
 # Add logging
-# Add SentinelType and Sentinel rather than None...
-# Add README content
+# Add a config file and put there all the constants from main()
 # Add comments about GIL (better to use processes than threads) ?

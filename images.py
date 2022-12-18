@@ -30,5 +30,5 @@ class PngImageSaver(FileSaver[Image]):
         image.imsave(path, content)
 
     @staticmethod
-    def extension():
+    def extension() -> str:
         return 'png'
