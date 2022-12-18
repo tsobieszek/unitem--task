@@ -20,7 +20,7 @@ def main() -> None:
     queue_b = Queue(maxsize=16)  # type: ImageTaskQueue
 
     save_dir = Path('processed')
-    save_dir.mkdir(parents=True, exist_ok=True)
+    save_dir.mkdir(exist_ok=True)
 
     transform1 = images.resize(zoom_factor=0.5)
     transform2 = images.median_filter(kernel_size=(5, 5))

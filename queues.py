@@ -15,6 +15,20 @@ Transform = Callable[[T], T]
 
 def ingest(source: DataSource[T], target: TaskQueue[T], *,
            limit: Optional[int] = None, interval_ms: int = 0) -> None:
+    """
+    Periodically ingest data from a data source (`source`), enclose each of them in a `RealTask` container
+    and put such containers in a queue (`target`).
+
+    If `limit` is not None then stop after having processed `limit` elements and put the `End`
+    sentinel at the end of the queue.
+
+    Each task is provided with a sequential `id` (starting from 1) and the `type` field is set to 'input'.
+
+    :param source: Input DataSource.
+    :param target: Output Queue of Tasks.
+    :param limit: The number of data items to ingest into the queue. Defaults to `None`.
+    :param interval_ms: The interval to sleep between retrieving data. Defaults to 0.
+    """
     counter = islice(count(start=1), limit)
 
     for task_id in counter:
@@ -27,6 +41,19 @@ def ingest(source: DataSource[T], target: TaskQueue[T], *,
 
 
 def process(source: TaskQueue[T], transform: Transform[T], target: TaskQueue[T]) -> None:
+    """
+    Retrieve tasks from `source` queue, transform the content of each task using `transform`,
+    enclose it in a `RealTask` container and push it to the `target` queue.
+
+    Processing stops if and when the `End` sentinel is retrieved from the `source` in which case the `End`
+    sentinel is put into the target.
+
+    The `id` of the output task is set to the id of the input. The `type` is set to 'output'.
+
+    :param source: Input Queue of Tasks.
+    :param transform: The transform to apply to the content of each task.
+    :param target: Output Queue of Tasks.
+    """
     while task := source.get():
         match task:
             case RealTask(task_id, _, content):
@@ -38,6 +65,18 @@ def process(source: TaskQueue[T], transform: Transform[T], target: TaskQueue[T])
 
 
 def save(source: TaskQueue[T], directory: Path, saver: FileSaver[T]) -> None:
+    """
+    Retrieve tasks from `source` queue and saves their content as a file in a `directory`.
+
+    The name of the file is `type_id.ext` where `type` and `id` are metadata fields of
+    a given task (`RealTask`). The extension is provided by `saver`.
+
+    Processing stops if and when the `End` sentinel is retrieved from the `source`.
+
+    :param source: Input Queue of Tasks.
+    :param directory: Directory in which the files are saved.
+    :param saver: `FileSaver`
+    """
     while task := source.get():
         match task:
             case RealTask(task_id, task_type, content):
