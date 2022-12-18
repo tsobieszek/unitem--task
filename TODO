@@ -1,4 +1,5 @@
 # Add exception handling
+# Test the median filter
 # Test main()
 # Add more test samples OR (better)
 # Add hypothesis properties-based tests

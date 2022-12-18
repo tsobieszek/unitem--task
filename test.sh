@@ -9,4 +9,4 @@ bulk_run mypy
 bulk_run pyflakes
 
 set -x
-pytest
+pytest --cov-report term-missing --cov

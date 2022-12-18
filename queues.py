@@ -20,6 +20,9 @@ def ingest(source: DataSource[T], target: TaskQueue[T], *,
     Periodically ingest data from a data source (`source`), enclose each of them in a `RealTask` container
     and put such containers in a queue (`target`).
 
+    After processing each item sleep `interval_ms` milliseconds. Note that this *does not provide
+    a truly periodic behaviour*, in particular source or target may block.
+
     If `limit` is not None then stop after having processed `limit` elements and put the `End`
     sentinel at the end of the queue.
 
