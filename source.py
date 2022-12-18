@@ -1,4 +1,12 @@
+from typing import Protocol, TypeVar
+
 import numpy as np
+
+
+T_co = TypeVar('T_co', covariant=True)
+
+class DataSource(Protocol[T_co]):
+    def get_data(self) -> T_co: ...
 
 
 class Source:

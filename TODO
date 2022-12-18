@@ -1,5 +1,5 @@
 # Add Tests !
-    ¿ mypy, pyflakes, py.test, hypothesis ?
+    ¿ py.test, hypothesis ?
     ¿ how to test threading ?
 # Add a config file ?
 # Add docstrings
